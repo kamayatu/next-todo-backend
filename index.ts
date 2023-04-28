@@ -1,10 +1,20 @@
 import express, { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client'
-
 const app = express();
 const port = 8000;
 
 app.use(express.json());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*") // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE")
+  res.setHeader("Access-Control-Max-Age", "3000")
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, x-access-token, x-user-id,Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
+  next()
+})
+
+
 
 const prisma = new PrismaClient();
 
